@@ -1,6 +1,11 @@
 require_relative 'spec_helper.rb'
 
 describe Owner do
+  
+  let(:owner) {Owner.new("human") }
+  let(:cat) { Cat.new("Crookshanks") }
+  let(:dog) { Dog.new("Fido") }  
+
 
   before do
     @owner = Owner.new("Victoria")
