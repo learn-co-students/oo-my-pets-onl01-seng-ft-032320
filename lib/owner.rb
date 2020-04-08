@@ -1,6 +1,6 @@
 class Owner
    attr_reader :name, :species
-   attr_accessor :dogs, :cats
+   attr_accessor :dogs, :cats, :pets 
    
    @@all=[]
   
@@ -8,8 +8,9 @@ class Owner
    @name = name 
    @species = "human"
    @@all << self 
-   @dogs = []
+   @dogs = [] 
    @cats = []
+   
   end
   
   def self.all 
@@ -27,7 +28,44 @@ class Owner
   def self.reset_all
     @@all.clear
   end 
+
+  def buy_cat(name)
+    Cat.new(name,self)
+    
+  end 
   
+  def buy_dog(name)
+    Dog.new(name,self)
+    
+  end
+  
+  def sell_pets
+    
+    @dogs.zip(@cats).each do |dog, cat| 
+      dog.owner = nil
+      dog.mood = "nervous"
+      cat.owner = nil 
+      cat.mood = "nervous"
+      
+    end 
+  @cats = []
+  @dogs = []
+  end 
+  
+  def walk_dogs
+    @dogs.each do |dog| dog.mood = "happy"
+  end 
+  end 
+  
+  def feed_cats 
+    @cats.each do |cat| cat.mood = "happy"
+  end 
+  end 
+  
+  def list_pets
+    
+    "I have #{@dogs.count} dog(s), and #{@cats.count} cat(s)."
+  end 
   
   
 
