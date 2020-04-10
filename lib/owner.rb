@@ -3,15 +3,12 @@ attr_accessor :cats, :dogs, :pets
 attr_reader :name, :species 
 
 @@all = []
-@@count = 0
-@@cats = []
-@@dogs = []
 def initialize(name)
+  @cats = []
+  @dogs = []
   @name = name
   @species = "human"
   @@all << self
-  @@count += 1
-  @pets = {:cats => [], :dogs => []}
 end
 
 def say_species
@@ -23,19 +20,11 @@ def self.all
 end
 
 def self.count
-  @@count
+  @@all.length
 end
 
 def self.reset_all
-  @@count = 0
-end
-
-def cats                                    #calls on the list of cats that the owner ownes
-  Cat.all.select {|cat| cat.owner == self}
-end
-
-def dogs
-  Dog.all.select {|dog| dog.owner == self}
+  @@all.clear
 end
 
  def buy_cat(name)
@@ -47,18 +36,24 @@ end
  end
 
  def walk_dogs
-   Dog.all.each {|dog| dog.mood = "happy" if dog.owner == self}
+   self.dogs.each {|dog| dog.mood = "happy"}
  end
  
  def feed_cats
-   Cat.all.each {|cat| cat.mood = "happy" if cat.owner == self}
+   self.cats.each {|cat| cat.mood = "happy"}
  end
  
 def sell_pets
-  Dog.all.each {|dog| dog.mood = "nervous" if dog.owner == self}
-  Cat.all.each {|cat| cat.mood = "nervous" if cat.owner == self}
-  Dog.all.each {|dog| dog.owner = nil if dog.owner == self}
-  Cat.all.each {|cat| cat.owner = nil if cat.owner == self}
+  self.dogs.each do |dog|
+     dog.mood = "nervous"
+     dog.owner = nil
+   end
+   self.cats.each do |cat|
+     cat.mood = "nervous"
+     cat.owner = nil
+   end
+   @cats.clear
+   @dogs.clear
 end
 
 def list_pets

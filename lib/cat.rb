@@ -6,16 +6,13 @@ class Cat
    @name = name
    @species = species
    @owner = owner 
+   owner.cats << self
    @mood = "nervous"
    save
  end
 
 def self.all
   @@all
-end
-
-def self.owner=(owner)
-  @owner = owner
 end
 
 def save
